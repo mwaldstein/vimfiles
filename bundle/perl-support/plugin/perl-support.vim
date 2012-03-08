@@ -113,6 +113,8 @@ let s:Perl_LocalTemplateFile	= ''
 let s:Perl_LocalTemplateDir		= ''
 let g:Perl_FilenameEscChar 		= ''
 "
+"
+
 if  s:MSWIN
   " ==========  MS Windows  ======================================================
 	"
@@ -139,7 +141,7 @@ if  s:MSWIN
 else
   " ==========  Linux/Unix  ======================================================
 	"
-	if match( expand("<sfile>"), expand("$HOME") ) == 0
+	if match( expand("<sfile>"), resolve(expand("$HOME")) ) == 0
 		" USER INSTALLATION ASSUMED
 		let g:Perl_Installation				= 'local'
 		let s:Perl_PluginDir  				= expand("<sfile>:p:h:h")
