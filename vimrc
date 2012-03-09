@@ -18,7 +18,6 @@
 set nocompatible
 set background=dark
 
-
 call pathogen#infect()
 "
 "-------------------------------------------------------------------------------
@@ -43,6 +42,7 @@ if  has("win16") || has("win32") || has("win64") || has("win95")
 "  set backupdir =$VIM\vimfiles\backupdir
 "  set dictionary=$VIM\vimfiles\wordlists/german.list
   set directory=$TMP
+  set gfn=Consolas:h9
 else
   set backupdir =$HOME/.vim.backupdir
 "  set dictionary=$HOME/.vim/wordlists/german.list,$HOME/.vim/wordlists/english.list
