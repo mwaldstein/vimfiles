@@ -1,4 +1,30 @@
 ---------------------------------------------------------------------------------------
+  RELEASE NOTES FOR VERSION 5.0
+---------------------------------------------------------------------------------------
+
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  ++  The plug-in version 5.0+ is a rewriting of version 4.15+.               ++
+  ++  The versions 5.0+ are based on a new and more powerful template system  ++
+  ++  (please see |template-support|for more information).                    ++
+  ++  The template syntax has changed!                                        ++
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+- New template system (many thanks to Wolfgang Mehner)
+- A few new hotkeys and menu item.
+- A few hotkeys and menu items renamed.
+
+---------------------------------------------------------------------------------------
+  RELEASE NOTES FOR VERSION 4.15
+---------------------------------------------------------------------------------------
+- Two new plugin tags: LICENCE, ORGANIZATION.
+- System-wide installation: minimal Template file for a user will automatically
+  be added.
+- Hotkeys \lcs, \ucs removed.
+- Minor improvements.
+
+---------------------------------------------------------------------------------------
   RELEASE NOTES FOR VERSION 4.14
 ---------------------------------------------------------------------------------------
 - Plugin loads faster: loading the templates is delayed until the first use.
