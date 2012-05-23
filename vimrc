@@ -48,13 +48,11 @@ if  has("win16") || has("win32") || has("win64") || has("win95")
 "  runtime mswin.vim
 "  set backupdir =$VIM\vimfiles\backupdir
 "  set dictionary=$VIM\vimfiles\wordlists/german.list
-  set directory=$TMP
+  set directory=$TMP,.
   set gfn=Consolas:h9
 else
-  set backupdir =$HOME/.vim.backupdir
 "  set dictionary=$HOME/.vim/wordlists/german.list,$HOME/.vim/wordlists/english.list
   set dictionary=$HOME/.vim/wordlists/english.list
-"  set directory=/tmp
 endif
 
 "-------------------------------------------------------------------------------
@@ -82,7 +80,7 @@ set autoindent                  " copy indent from current line
 set autoread                    " read open files again when changed outside Vim
 set autowrite                   " write a modified buffer on each :next , ...
 set backspace=indent,eol,start  " backspacing over everything in insert mode
-set backup                      " keep a backup file
+set nobackup                    " don't keep a backup file
 set browsedir=current           " which directory to use for the file browser
 set complete+=k                 " scan the files given with the 'dictionary' option
 set history=50                  " keep 50 lines of command line history
@@ -96,7 +94,6 @@ set showcmd                     " display incomplete commands
 set smartindent                 " smart autoindenting when starting a new line
 set visualbell                  " visual bell instead of beeping
 set shiftround                  " use multiple of shiftwidth when indenting with '<' and '>'
-
 
 set encoding=utf-8
 set scrolloff=3                 " Min number of screen lines to keep above/below cursor
@@ -155,6 +152,15 @@ inoremap <left> <nop>
 inoremap <right> <nop>
 nnoremap j gj
 nnoremap k gk
+"-------------------------------------------------------------------------------
+" Window Navigation
+"-------------------------------------------------------------------------------
+nnoremap <leader>w <C-w>v<C-w>l
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
 
 "-------------------------------------------------------------------------------
 "  some additional hot keys
@@ -193,7 +199,7 @@ inoremap           <F12>   <C-C>:ls<CR>:edit #
 "-------------------------------------------------------------------------------
 " comma always followed by a space
 "-------------------------------------------------------------------------------
-inoremap  ,  ,<Space>
+"inoremap  ,  ,<Space>
 "
 "-------------------------------------------------------------------------------
 " autocomplete parenthesis, (brackets) and braces
