@@ -150,8 +150,8 @@ inoremap <up> <nop>
 inoremap <down> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
-nnoremap j gj
-nnoremap k gk
+"#nnoremap j gj
+"#nnoremap k gk
 "-------------------------------------------------------------------------------
 " Window Navigation
 "-------------------------------------------------------------------------------
@@ -166,64 +166,24 @@ nnoremap <C-l> <C-w>l
 "  some additional hot keys
 "-------------------------------------------------------------------------------
 "     F1  -  Same as escape to avoid bringing up help
-"     F2  -  write file without confirmation
-"     F3  -  call file explorer Ex
 "     F4  -  show tag under curser in the preview window (tagfile must exist!)
 "     F6  -  list all errors           
 "     F7  -  display previous error
 "     F8  -  display next error   
-"     F12 -  list buffers and edit n-th buffer
 "-------------------------------------------------------------------------------
 inoremap <F1> <ESC>
 nnoremap <F1> <ESC>
 vnoremap <F1> <ESC>
 
-noremap   <silent> <F2>         :write<CR>
-noremap   <silent> <F3>         :Explore<CR>
 noremap   <silent> <F4>         :execute ":ptag ".expand("<cword>")<CR>
-noremap   <silent> <F5>         :copen<CR>
 noremap   <silent> <F6>         :cclose<CR>
 noremap   <silent> <F7>         :cprevious<CR>
 noremap   <silent> <F8>         :cnext<CR>
-noremap            <F12>        :ls<CR>:edit #
 "
-inoremap  <silent> <F2>    <C-C>:write<CR>
-inoremap  <silent> <F3>    <C-C>:Explore<CR>
 inoremap  <silent> <F4>    <C-C>:execute ":ptag ".expand("<cword>")<CR>
-inoremap  <silent> <F5>    <C-C>:copen<CR>
 inoremap  <silent> <F6>    <C-C>:cclose<CR>
 inoremap  <silent> <F7>    <C-C>:cprevious<CR>
 inoremap  <silent> <F8>    <C-C>:cnext<CR>
-inoremap           <F12>   <C-C>:ls<CR>:edit #
-"
-"-------------------------------------------------------------------------------
-" comma always followed by a space
-"-------------------------------------------------------------------------------
-"inoremap  ,  ,<Space>
-"
-"-------------------------------------------------------------------------------
-" autocomplete parenthesis, (brackets) and braces
-"-------------------------------------------------------------------------------
-"inoremap  (  ()<Left>
-"inoremap  [  []<Left>
-"inoremap  {  {}<Left>
-""
-"vnoremap  (  s()<Esc>P<Right>%
-"vnoremap  [  s[]<Esc>P<Right>%
-"vnoremap  {  s{}<Esc>P<Right>%
-""
-"" surround content with additional spaces
-""
-"vnoremap  )  s(  )<Esc><Left>P<Right><Right>%
-"vnoremap  ]  s[  ]<Esc><Left>P<Right><Right>%
-"vnoremap  }  s{  }<Esc><Left>P<Right><Right>%
-"
-"-------------------------------------------------------------------------------
-" autocomplete quotes (visual and select mode)
-"-------------------------------------------------------------------------------
-"xnoremap  '  s''<Esc>P<Right>
-"xnoremap  "  s""<Esc>P<Right>
-"xnoremap  `  s``<Esc>P<Right>
 "
 "-------------------------------------------------------------------------------
 " The current directory is the directory of the file in the current window.
