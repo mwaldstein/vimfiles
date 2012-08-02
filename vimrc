@@ -241,7 +241,4 @@ nmap <s-tab> ^i<bs><esc>
 vmap _c :s/^/#/gi<Enter>
 vmap _C :s/^#//gi<Enter>
 
-
-"color simple-dark
-"color zenburn
-color gummybears
+color lucius
