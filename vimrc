@@ -109,11 +109,15 @@ set wildmode=list:longest
 set wildignore=*.bak,*.o,*.e,*~ " wildmenu: ignore these extensions
 
 set laststatus=2                " Always show status line
-set relativenumber              " make line numbers relative to current line
 
 set textwidth=79                " wrap at line 79
 set formatoptions=qrn1          " softwrap?
-set colorcolumn=85              " mark column 85 to indicate wrapping
+
+" vim 7.3 specific options
+if v:version >= 730
+  set colorcolumn=85              " mark column 85 to indicate wrapping
+  set relativenumber              " make line numbers relative to current line
+endif
 
 set list                        " display hidden characters
 
