@@ -81,6 +81,8 @@ set autoread                    " read open files again when changed outside Vim
 set autowrite                   " write a modified buffer on each :next , ...
 set backspace=indent,eol,start  " backspacing over everything in insert mode
 set nobackup                    " don't keep a backup file
+set noswapfile                  " not needed with a lot of memory 
+                                " http://blog.sanctum.geek.nz/vim-annoyances/
 set browsedir=current           " which directory to use for the file browser
 set complete+=k                 " scan the files given with the 'dictionary' option
 set history=50                  " keep 50 lines of command line history
@@ -114,6 +116,9 @@ set formatoptions=qrn1          " softwrap?
 set colorcolumn=85              " mark column 85 to indicate wrapping
 
 set list                        " display hidden characters
+
+set splitbelow                  " set splits happen in a more logical manner
+set splitright                  " new splits in a reasonable place
 
 "-------------------------------------------------------------------------------
 "  highlight paired brackets
@@ -161,6 +166,13 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
+"-------------------------------------------------------------------------------
+" Remove some annoyances
+"-------------------------------------------------------------------------------
+" avoid entering ex mode when recording a macro
+nnoremap Q <nop>
+" don't need to bring up man pages...
+nnoremap K <nop>
 
 "-------------------------------------------------------------------------------
 "  some additional hot keys
