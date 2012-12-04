@@ -182,6 +182,7 @@ nnoremap K <nop>
 "  some additional hot keys
 "-------------------------------------------------------------------------------
 "     F1  -  Same as escape to avoid bringing up help
+"     F2  -  Toggle NERDTree
 "     F4  -  show tag under curser in the preview window (tagfile must exist!)
 "     F6  -  list all errors           
 "     F7  -  display previous error
@@ -190,6 +191,8 @@ nnoremap K <nop>
 inoremap <F1> <ESC>
 nnoremap <F1> <ESC>
 vnoremap <F1> <ESC>
+
+map      <F2> :NERDTreeToggle<CR>
 
 noremap   <silent> <F4>         :execute ":ptag ".expand("<cword>")<CR>
 noremap   <silent> <F6>         :cclose<CR>
