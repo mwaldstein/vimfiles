@@ -19,8 +19,6 @@ call pathogen#infect()
 " This must be first, because it changes other options as a side effect.
 "-------------------------------------------------------------------------------
 set nocompatible
-set background=dark
-set t_Co=256
 
 "-------------------------------------------------------------------------------
 " Avoid some security exploits
@@ -266,4 +264,7 @@ nmap <s-tab> ^i<bs><esc>
 vmap _c :s/^/#/gi<Enter>
 vmap _C :s/^#//gi<Enter>
 
-color lucius
+set t_Co=256
+let g:solarized_termcolors=256
+set background=dark
+colorscheme solarized
