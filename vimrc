@@ -87,7 +87,7 @@ set history=50                  " keep 50 lines of command line history
 set listchars=tab:>.,eol:\$     " strings to use in 'list' mode
 set mouse=                      " disable the use of the mouse
 set wrap                        " wrap lines
-set number                      " show line numbers
+set nonumber                    " don't show line numbers - we'd like to show relative.
 set popt=left:8pc,right:3pc     " print options
 set ruler                       " show the cursor position all the time
 set showcmd                     " display incomplete commands
@@ -114,7 +114,13 @@ set formatoptions=qrn1          " softwrap?
 " vim 7.3 specific options
 if v:version >= 730
   set colorcolumn=85              " mark column 85 to indicate wrapping
+endif
+
+" vim 7.0.3 specific options
+if v:version >= 703
   set relativenumber              " make line numbers relative to current line
+else
+  set number                      " fall back on just showing numbers
 endif
 
 set list                        " display hidden characters
