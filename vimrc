@@ -1,24 +1,15 @@
-"===================================================================================
-"         FILE:  .vimrc
-"  DESCRIPTION:  suggestion for a personal configuration file ~/.vimrc
-"       AUTHOR:  Dr.-Ing. Fritz Mehner
-"      VERSION:  1.0
-"      CREATED:  23.05.2008
-"     REVISION:  $Id: customization.vimrc,v 1.9 2011/05/05 17:49:18 mehner Exp $
-"===================================================================================
-"
-"===================================================================================
-" GENERAL SETTINGS
-"===================================================================================
-" Startup pathogen
+set nocompatible  " use VIM settings, not vi
+filetype off      " required for vundle
 
-call pathogen#infect()
+set rtp+=~/.vim/bundle/Vundle.vim " set the runtime to include Vundle
+call vundle#begin()               " initialize
 
-"-------------------------------------------------------------------------------
-" Use Vim settings, rather then Vi settings.
-" This must be first, because it changes other options as a side effect.
-"-------------------------------------------------------------------------------
-set nocompatible
+Plugin 'gmarik/Vundle.vim'        " let Vundle manage itself
+Plugin 'kien/ctrlp.vim'           " ctrlp
+Plugin 'bling/vim-airline'        " airline
+Plugin 'altercation/vim-colors-solarized'
+
+call vundle#end()
 
 "-------------------------------------------------------------------------------
 " Avoid some security exploits
@@ -186,28 +177,11 @@ nnoremap K <nop>
 "  some additional hot keys
 "-------------------------------------------------------------------------------
 "     F1  -  Same as escape to avoid bringing up help
-"     F2  -  Toggle NERDTree
-"     F4  -  show tag under curser in the preview window (tagfile must exist!)
-"     F6  -  list all errors           
-"     F7  -  display previous error
-"     F8  -  display next error   
 "-------------------------------------------------------------------------------
 inoremap <F1> <ESC>
 nnoremap <F1> <ESC>
 vnoremap <F1> <ESC>
 
-map      <F2> :NERDTreeToggle<CR>
-
-noremap   <silent> <F4>         :execute ":ptag ".expand("<cword>")<CR>
-noremap   <silent> <F6>         :cclose<CR>
-noremap   <silent> <F7>         :cprevious<CR>
-noremap   <silent> <F8>         :cnext<CR>
-"
-inoremap  <silent> <F4>    <C-C>:execute ":ptag ".expand("<cword>")<CR>
-inoremap  <silent> <F6>    <C-C>:cclose<CR>
-inoremap  <silent> <F7>    <C-C>:cprevious<CR>
-inoremap  <silent> <F8>    <C-C>:cnext<CR>
-"
 "-------------------------------------------------------------------------------
 " The current directory is the directory of the file in the current window.
 "-------------------------------------------------------------------------------
@@ -241,21 +215,6 @@ nnoremap  <C-q>    :wqall<CR>
 "
 let g:ctrlp_dotfiles = 0
 "
-"-------------------------------------------------------------------------------
-" perl-support.vim
-"-------------------------------------------------------------------------------
-"            
-" --empty --
-"
-"-------------------------------------------------------------------------------
-" plugin taglist.vim : toggle the taglist window
-" plugin taglist.vim : define the tag file entry for Perl
-"-------------------------------------------------------------------------------
-"-------------------------------------------------------------------------------
- noremap <silent> <F11>       :TlistToggle<CR>
-inoremap <silent> <F11>  <C-C>:TlistToggle<CR>
-"
-let tlist_perl_settings  = 'perl;c:constants;f:formats;l:labels;p:packages;s:subroutines;d:subroutines;o:POD;k:comments'
 "
 
 " make tab in v mode ident code
