@@ -8,6 +8,7 @@ Plugin 'gmarik/Vundle.vim'        " let Vundle manage itself
 Plugin 'kien/ctrlp.vim'           " ctrlp
 Plugin 'bling/vim-airline'        " airline
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'pangloss/vim-javascript'   " better js syntax
 
 call vundle#end()
 
