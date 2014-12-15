@@ -8,6 +8,7 @@ Plugin 'gmarik/Vundle.vim'        " let Vundle manage itself
 Plugin 'kien/ctrlp.vim'           " ctrlp
 Plugin 'bling/vim-airline'        " airline
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'ajh17/Spacegray.vim'      " spacegray colorscheme
 
 call vundle#end()
 
@@ -232,4 +233,4 @@ vmap _C :s/^#//gi<Enter>
 set t_Co=256
 let g:solarized_termcolors=256
 set background=light
-colorscheme solarized
+colorscheme spacegray
