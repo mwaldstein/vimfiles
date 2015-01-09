@@ -1,7 +1,11 @@
 set nocompatible  " use VIM settings, not vi
 filetype off      " required for vundle
 
-set rtp+=~/.vim/bundle/Vundle.vim " set the runtime to include Vundle
+if has("win32") || has("win16")
+  set rtp+=~/vimfiles/bundle/Vundle.vim " set the runtime to include Vundle
+else
+  set rtp+=~/.vim/bundle/Vundle.vim " set the runtime to include Vundle
+endif
 call vundle#begin()               " initialize
 
 Plugin 'gmarik/Vundle.vim'        " let Vundle manage itself
