@@ -68,6 +68,11 @@ if &term == "screen-bce" || &term == "screen"
   set t_fs=\
 endif
 
+set term=xterm
+set t_Co=256
+let &t_AB="\e[48;5;%dm"
+let &t_AF="\e[38;5;%dm"
+
 "-------------------------------------------------------------------------------
 " Various settings
 "-------------------------------------------------------------------------------
@@ -236,6 +241,6 @@ vmap _c :s/^/#/gi<Enter>
 vmap _C :s/^#//gi<Enter>
 
 set t_Co=256
-let g:solarized_termcolors=256
-set background=light
-colorscheme spacegray
+colorscheme zenburn
+
+let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist)|(\.(swp|ico|git|svn))$'
