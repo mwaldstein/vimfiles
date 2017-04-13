@@ -13,7 +13,8 @@ Plugin 'kien/ctrlp.vim'           " ctrlp
 Plugin 'bling/vim-airline'        " airline
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'ajh17/Spacegray.vim'      " spacegray colorscheme
-Plugin 'pangloss/vim-javascript'   " better js syntax
+Plugin 'pangloss/vim-javascript'  " better js syntax
+Plugin 'posva/vim-vue'            " vue file syntax
 
 call vundle#end()
 
