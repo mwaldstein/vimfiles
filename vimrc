@@ -10,19 +10,19 @@ call vundle#begin()               " initialize
 
 Plugin 'gmarik/Vundle.vim'        " let Vundle manage itself
 Plugin 'kien/ctrlp.vim'           " ctrlp
-Plugin 'bling/vim-airline'        " airline
+Plugin 'bling/vim-airline'        " Need airline for ale to look nice
 Plugin 'altercation/vim-colors-solarized'
-Plugin 'ajh17/Spacegray.vim'      " spacegray colorscheme
 Plugin 'pangloss/vim-javascript'  " better js syntax
 Plugin 'posva/vim-vue'            " vue file syntax
-
+Plugin 'jalvesaq/Nvim-R'          " R tools
+Plugin 'christoomey/vim-tmux-navigator'          " Screen to simulate split shell
+Plugin 'w0rp/ale'                 " Syntax checking async
 call vundle#end()
 
 "-------------------------------------------------------------------------------
 " Avoid some security exploits
 "-------------------------------------------------------------------------------
 set modelines=0
-
 "-------------------------------------------------------------------------------
 " Enable file type detection. Use the default filetype settings.
 " Also load indent files, to automatically do language-dependent indenting.
@@ -63,16 +63,6 @@ set expandtab                   " tab = spaces
 " Title Stettings
 "-------------------------------------------------------------------------------
 set title                       " change the terminal title
-set titlestring=vim(%t)
-if &term == "screen-bce" || &term == "screen"
-  set t_ts=k
-  set t_fs=\
-endif
-
-set term=xterm
-set t_Co=256
-let &t_AB="\e[48;5;%dm"
-let &t_AF="\e[38;5;%dm"
 
 "-------------------------------------------------------------------------------
 " Various settings
@@ -105,10 +95,6 @@ set showcmd                     " show command in last line
 set hidden                      " don't unload hidden buffers
 set ttyfast                     " smooths redrawing due to more characters sent along
 
-set wildmenu                    " command-line completion in an enhanced mode
-set wildmode=list:longest
-set wildignore=*.bak,*.o,*.e,*~ " wildmenu: ignore these extensions
-
 set laststatus=2                " Always show status line
 
 set textwidth=79                " wrap at line 79
@@ -127,9 +113,6 @@ else
 endif
 
 set list                        " display hidden characters
-
-set splitbelow                  " set splits happen in a more logical manner
-set splitright                  " new splits in a reasonable place
 
 "-------------------------------------------------------------------------------
 "  highlight paired brackets
@@ -166,11 +149,13 @@ inoremap <up> <nop>
 inoremap <down> <nop>
 inoremap <left> <nop>
 inoremap <right> <nop>
-"#nnoremap j gj
-"#nnoremap k gk
+
 "-------------------------------------------------------------------------------
-" Window Navigation
+" Better split navigation Navigation
 "-------------------------------------------------------------------------------
+set splitbelow                  " set splits happen in a more logical manner
+set splitright                  " new splits in a reasonable place
+
 nnoremap <leader>w <C-w>v<C-w>l
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
@@ -195,53 +180,67 @@ nnoremap <F1> <ESC>
 vnoremap <F1> <ESC>
 
 "-------------------------------------------------------------------------------
+"     F12  -  Paste toggle
+"-------------------------------------------------------------------------------
+" http://vim.wikia.com/wiki/Toggle_auto-indenting_for_code_paste
+"nnoremap <F12> :set invpaste paste?<CR>
+set pastetoggle=<F12>
+"set showmode
+
+"-------------------------------------------------------------------------------
 " The current directory is the directory of the file in the current window.
 "-------------------------------------------------------------------------------
-if has("autocmd")
-  autocmd BufEnter * :lchdir %:p:h
-endif
+" if has("autocmd")
+"   autocmd BufEnter * :lchdir %:p:h
+" endif
 "
-"-------------------------------------------------------------------------------
-" Fast switching between buffers
-" The current buffer will be saved before switching to the next one.
-" Choose :bprevious or :bnext
-"-------------------------------------------------------------------------------
- noremap  <silent> <s-tab>       :if &modifiable && !&readonly && 
-     \                      &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
-inoremap  <silent> <s-tab>  <C-C>:if &modifiable && !&readonly && 
-     \                      &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
-"
-"-------------------------------------------------------------------------------
-" Leave the editor with Ctrl-q (KDE): Write all changed buffers and exit Vim
-"-------------------------------------------------------------------------------
-nnoremap  <C-q>    :wqall<CR>
-"
-"
+"===================================================================================
+" builtin searching tweaks
+"===================================================================================
+set wildmenu                    " command-line completion in an enhanced mode
+set wildmode=list:longest
+set wildignore=*.bak,*.o,*.e,*~ " wildmenu: ignore these extensions
+" git ignore
+set wildignore+=*/.git/**/*
+set wildignore+=*/node_modules/*,*/vendor/*
+set wildignore+=*.bak,*.o,*.e,*~ " wildmenu: ignore these extensions
+
+" built in searching stuff
+set path=.,**
+set wildignorecase
+set wildmenu                    " command-line completion in an enhanced mode
+set wildmode=list:longest
+
 "===================================================================================
 " VARIOUS PLUGIN CONFIGURATIONS
 "===================================================================================
-"
+" COLORS --------------------------------------
+set t_Co=256
+set t_ut=   " Disables background redraw
+let g:solarized_termcolors=256
+set background=dark
+colorscheme solarized
+
 "-------------------------------------------------------------------------------
 " ctrlp
 "-------------------------------------------------------------------------------
-"
 let g:ctrlp_dotfiles = 0
-"
-"
-
-" make tab in v mode ident code
-vmap <tab> >gv
-vmap <s-tab> <gv
-"
-" " make tab in normal mode ident code
-nmap <tab> I<tab><esc>
-nmap <s-tab> ^i<bs><esc>
-
-" comment/uncomment blocks of code (in vmode)
-vmap _c :s/^/#/gi<Enter>
-vmap _C :s/^#//gi<Enter>
-
-set t_Co=256
-colorscheme zenburn
-
 let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist)|(\.(swp|ico|git|svn))$'
+let g:ctrlp_working_path_mode = 'ra'
+
+"-----------------------------------------------------------------------------------
+" Vim-R
+"-----------------------------------------------------------------------------------
+let R_in_buffer = 0
+let R_applescript = 0
+let R_tmux_split = 1
+let R_assign = 3
+
+"-----------------------------------------------------------------------------------
+" ALE Syntax check config
+"-----------------------------------------------------------------------------------
+let g:airline#extensions#ale#enabled = 1
+let g:ale_javascript_eslint_use_global = 0 " Force use of local eslint
+" Map keys to use wrapping.
+nmap <silent> <C-K> <Plug>(ale_previous_wrap)
+nmap <silent> <C-J> <Plug>(ale_next_wrap)
