@@ -211,13 +211,22 @@ set wildignorecase
 set wildmenu                    " command-line completion in an enhanced mode
 set wildmode=list:longest
 
+"-------------------------------------------------------------------------------
+" TMux integration
+"-------------------------------------------------------------------------------
+if has("win32") || has("win16")
+else
+  autocmd BufReadPost,FileReadPost,BufNewFile,BufEnter * call system("tmux rename-window 'vim | " . expand("%:t") . "'")
+  autocmd VimLeave * call system("tmux rename-window 'tmux'")
+endif
 "===================================================================================
 " VARIOUS PLUGIN CONFIGURATIONS
 "===================================================================================
 " COLORS --------------------------------------
 set t_Co=256
 set t_ut=   " Disables background redraw
-let g:solarized_termcolors=256
+"let g:solarized_termcolors=256
+let g:solarized_termcolors=16
 set background=dark
 colorscheme solarized
 
@@ -241,6 +250,7 @@ let R_assign = 3
 "-----------------------------------------------------------------------------------
 let g:airline#extensions#ale#enabled = 1
 let g:ale_javascript_eslint_use_global = 0 " Force use of local eslint
+let g:ale_sign_column_always = 1           " always keep the gutter open
 " Map keys to use wrapping.
 nmap <silent> <C-K> <Plug>(ale_previous_wrap)
 nmap <silent> <C-J> <Plug>(ale_next_wrap)
