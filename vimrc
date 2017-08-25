@@ -10,14 +10,13 @@ call vundle#begin()               " initialize
 Plugin 'gmarik/Vundle.vim'        " let Vundle manage itself
 Plugin 'tpope/vim-sensible'       " A lot of good defaults
 Plugin 'kien/ctrlp.vim'           " ctrlp
-"Plugin 'bling/vim-airline'        " Need airline for ale to look nice
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'pangloss/vim-javascript'  " better js syntax
 Plugin 'posva/vim-vue'            " vue file syntax
 Plugin 'jalvesaq/Nvim-R'          " R tools
 Plugin 'christoomey/vim-tmux-navigator'          " Screen to simulate split shell
 Plugin 'w0rp/ale'                 " Syntax checking async
-"Plugin 'tpope/vim-fugitive'       " Git management
+Plugin 'tpope/vim-vinegar'
 call vundle#end()
 
 "
