@@ -8,32 +8,18 @@ else
 endif
 call vundle#begin()               " initialize
 Plugin 'gmarik/Vundle.vim'        " let Vundle manage itself
+Plugin 'tpope/vim-sensible'       " A lot of good defaults
 Plugin 'kien/ctrlp.vim'           " ctrlp
-Plugin 'bling/vim-airline'        " Need airline for ale to look nice
+"Plugin 'bling/vim-airline'        " Need airline for ale to look nice
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'pangloss/vim-javascript'  " better js syntax
 Plugin 'posva/vim-vue'            " vue file syntax
 Plugin 'jalvesaq/Nvim-R'          " R tools
 Plugin 'christoomey/vim-tmux-navigator'          " Screen to simulate split shell
 Plugin 'w0rp/ale'                 " Syntax checking async
-Plugin 'tpope/vim-fugitive'       " Git management
+"Plugin 'tpope/vim-fugitive'       " Git management
 call vundle#end()
 
-"-------------------------------------------------------------------------------
-" Avoid some security exploits
-"-------------------------------------------------------------------------------
-set modelines=0
-"-------------------------------------------------------------------------------
-" Enable file type detection. Use the default filetype settings.
-" Also load indent files, to automatically do language-dependent indenting.
-"-------------------------------------------------------------------------------
-filetype  plugin on
-filetype  indent on
-"
-"-------------------------------------------------------------------------------
-" Switch syntax highlighting on.
-"-------------------------------------------------------------------------------
-syntax    on            
 "
 " Platform specific items:
 " - central backup directory (has to be created)
@@ -42,12 +28,9 @@ syntax    on
 if  has("win16") || has("win32") || has("win64") || has("win95")
 "
 "  runtime mswin.vim
-"  set backupdir =$VIM\vimfiles\backupdir
-"  set dictionary=$VIM\vimfiles\wordlists/german.list
   set directory=$TMP,.
   set gfn=Consolas:h9
 else
-"  set dictionary=$HOME/.vim/wordlists/german.list,$HOME/.vim/wordlists/english.list
   set dictionary=$HOME/.vim/wordlists/english.list
 endif
 
@@ -67,17 +50,10 @@ set title                       " change the terminal title
 "-------------------------------------------------------------------------------
 " Various settings
 "-------------------------------------------------------------------------------
-set autoindent                  " copy indent from current line
-set autoread                    " read open files again when changed outside Vim
-set autowrite                   " write a modified buffer on each :next , ...
-set backspace=indent,eol,start  " backspacing over everything in insert mode
 set nobackup                    " don't keep a backup file
 set noswapfile                  " not needed with a lot of memory 
                                 " http://blog.sanctum.geek.nz/vim-annoyances/
 set browsedir=current           " which directory to use for the file browser
-set complete+=k                 " scan the files given with the 'dictionary' option
-set history=50                  " keep 50 lines of command line history
-set listchars=tab:>.,eol:\$     " strings to use in 'list' mode
 set mouse=                      " disable the use of the mouse
 set wrap                        " wrap lines
 set nonumber                    " don't show line numbers - we'd like to show relative.
@@ -86,19 +62,15 @@ set ruler                       " show the cursor position all the time
 set showcmd                     " display incomplete commands
 set smartindent                 " smart autoindenting when starting a new line
 set visualbell                  " visual bell instead of beeping
-set shiftround                  " use multiple of shiftwidth when indenting with '<' and '>'
 
 set encoding=utf-8
-set scrolloff=3                 " Min number of screen lines to keep above/below cursor
+set scrolloff=4                 " Min number of screen lines to keep above/below cursor
 set showmode                    " Put message with current mode
 set showcmd                     " show command in last line
 set hidden                      " don't unload hidden buffers
 set ttyfast                     " smooths redrawing due to more characters sent along
 
-set laststatus=2                " Always show status line
-
 set textwidth=79                " wrap at line 79
-set formatoptions=qrn1          " softwrap?
 
 " vim 7.3 specific options
 if v:version >= 730
@@ -131,8 +103,6 @@ set smartcase                   " except when the search contains case
 
 set showmatch
 set hlsearch                    " highlightthe last used search pattern
-set incsearch                   " do incremental searching
-
 nnoremap <leader><space> :noh<cr>  " easy clear out search
 nnoremap <tab> %
 vnoremap <tab> %
