@@ -222,7 +222,6 @@ let g:netrw_hide = 1 " hide dotfiles by default
 """ Explore in vertical split
 nnoremap <Leader>e :Explore! <enter>
 
-
 "-----------------------------------------------------------------------------------
 " Vim-R
 "-----------------------------------------------------------------------------------
