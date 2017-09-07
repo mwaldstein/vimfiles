@@ -11,12 +11,13 @@ Plugin 'gmarik/Vundle.vim'        " let Vundle manage itself
 Plugin 'tpope/vim-sensible'       " A lot of good defaults
 Plugin 'kien/ctrlp.vim'           " ctrlp
 Plugin 'altercation/vim-colors-solarized'
-Plugin 'pangloss/vim-javascript'  " better js syntax
-Plugin 'posva/vim-vue'            " vue file syntax
 Plugin 'jalvesaq/Nvim-R'          " R tools
 Plugin 'christoomey/vim-tmux-navigator'          " Screen to simulate split shell
 Plugin 'w0rp/ale'                 " Syntax checking async
-Plugin 'tpope/vim-vinegar'
+Plugin 'tpope/vim-vinegar'        " Folder navigation
+Plugin 'sheerun/vim-polyglot'     " syntax support for everything
+"Plugin 'pangloss/vim-javascript'  " better js syntax
+"Plugin 'posva/vim-vue'            " vue file syntax
 call vundle#end()
 
 "
@@ -188,9 +189,10 @@ set wildmode=list:longest
 "-------------------------------------------------------------------------------
 " TMux integration
 "-------------------------------------------------------------------------------
+" title settings for tmux
 if has("win32") || has("win16")
 else
-  autocmd BufReadPost,FileReadPost,BufNewFile,BufEnter * call system("tmux rename-window 'vim | " . expand("%:t") . "'")
+  autocmd BufReadPost,FileReadPost,BufNewFile,BufEnter * call system("tmux rename-window '<" . expand("%:t") . ">'")
   autocmd VimLeave * call system("tmux rename-window 'tmux'")
 endif
 "===================================================================================
@@ -210,6 +212,12 @@ colorscheme solarized
 let g:ctrlp_dotfiles = 0
 let g:ctrlp_custom_ignore = '\v[\/](node_modules|target|dist)|(\.(swp|ico|git|svn))$'
 let g:ctrlp_working_path_mode = 'ra'
+
+"-----------------------------------------------------------------------------------
+" Foldin
+"-----------------------------------------------------------------------------------
+set foldmethod=syntax
+set foldlevelstart=2
 
 "-----------------------------------------------------------------------------------
 " NetRW
@@ -237,5 +245,85 @@ let g:airline#extensions#ale#enabled = 1
 let g:ale_javascript_eslint_use_global = 0 " Force use of local eslint
 let g:ale_sign_column_always = 1           " always keep the gutter open
 " Map keys to use wrapping.
-nmap <silent> <C-K> <Plug>(ale_previous_wrap)
-nmap <silent> <C-J> <Plug>(ale_next_wrap)
+nmap <silent> <Leader>n <Plug>(ale_previous_wrap)
+nmap <silent> <Leader>p <Plug>(ale_next_wrap)
+
+function! LinterStatus() abort
+  let l:counts = ale#statusline#Count(bufnr(''))
+
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+
+  return l:counts.total == 0 ? 'OK' : printf(
+      \   '%dW %dE',
+      \   all_non_errors,
+      \   all_errors
+  \)
+endfunction
+
+
+" For a more fancy ale statusline
+function! ALEGetOk()
+  let l:res = ale#statusline#Status()
+  if l:res ==# 'OK'
+    return '•'
+  else
+    return ''
+  endif
+endfunction
+
+function! ALEGetError()
+  let l:res = ale#statusline#Status()
+  if l:res ==# 'OK'
+    return ''
+  else
+    let l:e_w = split(l:res)
+    if len(l:e_w) == 2 || match(l:e_w, 'E') > -1
+      return '•' . matchstr(l:e_w[0], '\d\+')
+    else
+      return ''
+    endif
+  endif
+endfunction
+
+function! ALEGetWarning()
+  let l:counts = ale#statusline#Count(bufnr(''))
+
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+
+  if l:all_non_errors == 0
+    return ''
+  else
+    return '•' . l:all_non_errors
+  endif
+endfunction
+
+hi SignColumn ctermbg=0
+hi AleGutterOk ctermbg=0 ctermfg=2
+hi AleGutterWarning ctermbg=0 ctermfg=9
+hi AleGutterError ctermbg=0 ctermfg=1
+
+set statusline=%{LinterStatus()}
+
+set statusline=
+set statusline+=%#CursorColumn#
+set statusline+=%#AleGutterError#
+set statusline+=%{ALEGetError()}
+set statusline+=\ %#AleGutterWarning#
+set statusline+=%{ALEGetWarning()}
+set statusline+=\ %#AleGutterOk#
+set statusline+=%{ALEGetOk()}
+set statusline+=%#CursorColumn#
+"set statusline+=%{LinterStatus()}
+"set statusline+=%#LineNr#
+set statusline+=\ %f
+set statusline+=%m
+set statusline+=%=
+set statusline+=%#CursorColumn#
+set statusline+=\ %y
+"set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
+"set statusline+=\[%{&fileformat}\]
+set statusline+=\ %p%%
+set statusline+=\ %l:%c
+set statusline+=\ 
