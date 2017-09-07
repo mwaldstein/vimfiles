@@ -16,6 +16,7 @@ Plugin 'christoomey/vim-tmux-navigator'          " Screen to simulate split shel
 Plugin 'w0rp/ale'                 " Syntax checking async
 Plugin 'tpope/vim-vinegar'        " Folder navigation
 Plugin 'sheerun/vim-polyglot'     " syntax support for everything
+Plugin 'vim-pandoc/vim-pandoc-syntax' "needed to make RMD syntax highlighting work
 "Plugin 'pangloss/vim-javascript'  " better js syntax
 "Plugin 'posva/vim-vue'            " vue file syntax
 call vundle#end()
@@ -237,6 +238,9 @@ let R_in_buffer = 0
 let R_applescript = 0
 let R_tmux_split = 1
 let R_assign = 3
+
+let rrst_syn_hl_chunk = 1
+let rmd_syn_hl_chunk = 1
 
 "-----------------------------------------------------------------------------------
 " ALE Syntax check config
