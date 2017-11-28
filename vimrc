@@ -17,9 +17,12 @@ Plugin 'w0rp/ale'                 " Syntax checking async
 Plugin 'tpope/vim-vinegar'        " Folder navigation
 Plugin 'sheerun/vim-polyglot'     " syntax support for everything
 Plugin 'vim-pandoc/vim-pandoc-syntax' "needed to make RMD syntax highlighting work
+Plugin 'junegunn/vim-easy-align'  " Like it says on the tin
+
 "Plugin 'pangloss/vim-javascript'  " better js syntax
 "Plugin 'posva/vim-vue'            " vue file syntax
 call vundle#end()
+filetype plugin indent on    " required
 
 "
 " Platform specific items:
@@ -241,6 +244,22 @@ let R_assign = 3
 
 let rrst_syn_hl_chunk = 1
 let rmd_syn_hl_chunk = 1
+autocmd FileType r setlocal shiftwidth=2
+
+"-----------------------------------------------------------------------------------
+" Easy Align
+"-----------------------------------------------------------------------------------
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
+"-----------------------------------------------------------------------------------
+" Vim-Vue
+"-----------------------------------------------------------------------------------
+let g:vue_disable_pre_processors=1 " Speeds up slowdown from vim-vue checking for everything
+autocmd FileType vue syntax sync fromstart " avoid syntax highlighting getting confused
 
 "-----------------------------------------------------------------------------------
 " ALE Syntax check config

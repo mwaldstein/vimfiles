@@ -1,0 +1,10 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =8
+let g:netrw_dirhist_1='/home/micah/dev/edgarWebR'
+let g:netrw_dirhist_2='/home/micah/dev/edgarWebR/R'
+let g:netrw_dirhist_3='/home/micah/dev/edgarWebR'
+let g:netrw_dirhist_4='/home/micah/dev/edgarWebR/tests'
+let g:netrw_dirhist_5='/home/micah/dev/edgarWebR/tests/testthat'
+let g:netrw_dirhist_6='/home/micah/dev/edgarWebR/tests'
+let g:netrw_dirhist_7='/home/micah/dev/edgarWebR'
+let g:netrw_dirhist_8='/home/micah/dev/edgarWebR/R'
