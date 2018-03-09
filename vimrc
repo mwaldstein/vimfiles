@@ -7,10 +7,14 @@ else
   set rtp+=~/.vim/bundle/Vundle.vim " set the runtime to include Vundle
 endif
 call vundle#begin()               " initialize
-Plugin 'gmarik/Vundle.vim'        " let Vundle manage itself
+Plugin 'VundleVim/Vundle.vim'        " let Vundle manage itself
 Plugin 'tpope/vim-sensible'       " A lot of good defaults
 Plugin 'kien/ctrlp.vim'           " ctrlp
+" COLORS
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'lifepillar/vim-solarized8'
+Plugin 'morhetz/gruvbox'
+
 Plugin 'jalvesaq/Nvim-R'          " R tools
 Plugin 'christoomey/vim-tmux-navigator'          " Screen to simulate split shell
 Plugin 'w0rp/ale'                 " Syntax checking async
@@ -18,7 +22,9 @@ Plugin 'tpope/vim-vinegar'        " Folder navigation
 Plugin 'sheerun/vim-polyglot'     " syntax support for everything
 Plugin 'vim-pandoc/vim-pandoc-syntax' "needed to make RMD syntax highlighting work
 Plugin 'junegunn/vim-easy-align'  " Like it says on the tin
-
+Plugin 'joereynolds/SQHell.vim'   " sql manager
+"Plugin 'dbext.vim'                " sql manager
+Plugin 'jonathanfilip/vim-dbext'   " sql manager
 "Plugin 'pangloss/vim-javascript'  " better js syntax
 "Plugin 'posva/vim-vue'            " vue file syntax
 call vundle#end()
@@ -156,7 +162,58 @@ vnoremap <F1> <ESC>
 "-------------------------------------------------------------------------------
 "     F11  -  Toggle background
 "-------------------------------------------------------------------------------
-call togglebg#map("<F11>")
+" Source: http://vim.wikia.com/wiki/Switch_color_schemes
+" Very modified
+let paths = split(globpath(&runtimepath, 'colors/*.vim'), "\n")
+"let s:swcolors = map(paths, 'fnamemodify(v:val, ":t:r")')
+let s:swcolors = ['solarized8', 'solarized8_low', 'solarized8_high',
+                 \'solarized8_flat', 'gruvbox' ]
+let s:swskip = [ '256-jungle', '3dglasses', 'calmar256-light', 'coots-beauty-256', 'grb256' ]
+let s:swback = 0    " background variants light/dark was not yet switched
+let s:swindex = 0
+
+function! SwitchColor(swinc)
+  " if have switched background: dark/light
+  if (s:swback == 1)
+    let s:swindex += a:swinc
+  endif
+  let i = s:swindex % len(s:swcolors)
+
+  " in skip list
+  if (index(s:swskip, s:swcolors[i]) != -1)
+    return SwitchColor(a:swinc)
+  endif
+
+  if (s:swback == 1)
+    if (&background == "light")
+      execute "set background=dark"
+    else
+      execute "set background=light"
+    endif
+  endif
+  execute "colorscheme " . s:swcolors[i]
+
+  " roll back if background is not supported
+  if (!exists('g:colors_name'))
+    "execute "colorscheme " . s:swcolors[i]
+    "return SwitchColor(a:swinc)
+  endif
+
+  let s:swback = (s:swback == 1 ? 0 : 1)
+
+  " show current name on screen. :h :echo-redraw
+  redraw
+  execute "colorscheme"
+endfunction
+
+ map <F11>        :call SwitchColor(1)<CR>
+imap <F11>   <Esc>:call SwitchColor(1)<CR>
+
+ map <S-F11>      :call SwitchColor(-1)<CR>
+imap <S-F11> <Esc>:call SwitchColor(-1)<CR>
+
+nnoremap <leader>cc :call SwitchColor(1)<CR>
+nnoremap <leader>cb :call SwitchColor(-1)<CR>
 
 "-------------------------------------------------------------------------------
 "     F12  -  Paste toggle
@@ -203,12 +260,10 @@ endif
 " VARIOUS PLUGIN CONFIGURATIONS
 "===================================================================================
 " COLORS --------------------------------------
-set t_Co=256
-set t_ut=   " Disables background redraw
-"let g:solarized_termcolors=256
-let g:solarized_termcolors=16
+set termguicolors
 set background=dark
-colorscheme solarized
+let g:solarized_termtrans = 0
+colorscheme solarized8
 
 "-------------------------------------------------------------------------------
 " ctrlp
@@ -235,12 +290,19 @@ let g:netrw_hide = 1 " hide dotfiles by default
 nnoremap <Leader>e :Explore! <enter>
 
 "-----------------------------------------------------------------------------------
+" Markdown
+"-----------------------------------------------------------------------------------
+autocmd FileType markdown setlocal spell
+
+"-----------------------------------------------------------------------------------
 " Vim-R
 "-----------------------------------------------------------------------------------
 let R_in_buffer = 0
 let R_applescript = 0
 let R_tmux_split = 1
 let R_assign = 3
+
+let R_parenblock = 0 " Don't try to match parens when sending lines
 
 let rrst_syn_hl_chunk = 1
 let rmd_syn_hl_chunk = 1
@@ -260,6 +322,12 @@ nmap ga <Plug>(EasyAlign)
 "-----------------------------------------------------------------------------------
 let g:vue_disable_pre_processors=1 " Speeds up slowdown from vim-vue checking for everything
 autocmd FileType vue syntax sync fromstart " avoid syntax highlighting getting confused
+
+"-----------------------------------------------------------------------------------
+" dbext
+"-----------------------------------------------------------------------------------
+let g:dbext_default_profile_localSqlite = 'type=SQLITE:dbname=@askg'
+let g:dbext_default_job_enable = 1
 
 "-----------------------------------------------------------------------------------
 " ALE Syntax check config
