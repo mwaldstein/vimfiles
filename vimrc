@@ -61,7 +61,8 @@ set title                       " change the terminal title
 " Various settings
 "-------------------------------------------------------------------------------
 set nobackup                    " don't keep a backup file
-set noswapfile                  " not needed with a lot of memory 
+set nowritebackup               " Write direct to file rather than new and rename
+set noswapfile                  " not needed with a lot of memory
                                 " http://blog.sanctum.geek.nz/vim-annoyances/
 set browsedir=current           " which directory to use for the file browser
 set mouse=                      " disable the use of the mouse
@@ -141,6 +142,12 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+
+tnoremap <silent> <C-h> <C-w>:TmuxNavigateLeft<cr>
+tnoremap <silent> <C-j> <C-w>:TmuxNavigateDown<cr>
+tnoremap <silent> <C-k> <C-w>:TmuxNavigateUp<cr>
+tnoremap <silent> <C-l> <C-w>:TmuxNavigateRight<cr>
+tnoremap <silent> <C-\> <C-w>:TmuxNavigatePrevious<cr>
 
 "-------------------------------------------------------------------------------
 " Remove some annoyances
@@ -284,7 +291,7 @@ set foldlevelstart=2
 let g:netrw_liststyle = 1 " Detail View
 let g:netrw_sizestyle = "H" " Human-readable file sizes
 let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+' " hide dotfiles
-let g:netrw_hide = 1 " hide dotfiles by default
+" let g:netrw_hide = 1 " hide dotfiles by default
 "let g:netrw_banner = 0 " Turn off banner
 """ Explore in vertical split
 nnoremap <Leader>e :Explore! <enter>
@@ -297,9 +304,9 @@ autocmd FileType markdown setlocal spell
 "-----------------------------------------------------------------------------------
 " Vim-R
 "-----------------------------------------------------------------------------------
-let R_in_buffer = 0
-let R_applescript = 0
-let R_tmux_split = 1
+"let R_in_buffer = 0
+"let R_applescript = 0
+"let R_tmux_split = 1
 let R_assign = 3
 
 let R_parenblock = 0 " Don't try to match parens when sending lines
