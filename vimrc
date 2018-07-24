@@ -55,11 +55,6 @@ set softtabstop=2               "
 set expandtab                   " tab = spaces
 
 "-------------------------------------------------------------------------------
-" Title Stettings
-"-------------------------------------------------------------------------------
-set title                       " change the terminal title
-
-"-------------------------------------------------------------------------------
 " Various settings
 "-------------------------------------------------------------------------------
 set nobackup                    " don't keep a backup file
@@ -221,8 +216,8 @@ imap <F11>   <Esc>:call SwitchColor(1)<CR>
  map <S-F11>      :call SwitchColor(-1)<CR>
 imap <S-F11> <Esc>:call SwitchColor(-1)<CR>
 
-nnoremap <leader>cc :call SwitchColor(1)<CR>
-nnoremap <leader>cb :call SwitchColor(-1)<CR>
+nnoremap <leader>]] :call SwitchColor(1)<CR>
+nnoremap <leader>][ :call SwitchColor(-1)<CR>
 
 "-------------------------------------------------------------------------------
 "     F12  -  Paste toggle
@@ -257,13 +252,19 @@ set wildmenu                    " command-line completion in an enhanced mode
 set wildmode=list:longest
 
 "-------------------------------------------------------------------------------
-" TMux integration
+" TMux/title integration
 "-------------------------------------------------------------------------------
 " title settings for tmux
 if has("win32") || has("win16")
 else
-  autocmd BufReadPost,FileReadPost,BufNewFile,BufEnter * call system("tmux rename-window '<" . expand("%:t") . ">'")
-  autocmd VimLeave * call system("tmux rename-window 'tmux'")
+  " autocmd BufReadPost,FileReadPost,BufNewFile,BufEnter * call system("tmux rename-window '<" . expand("%:t") . ">'")
+  autocmd BufReadPost,FileReadPost,BufNewFile,BufEnter * let &titlestring = 'vim:' . expand("%:t")
+  autocmd VimLeave * set notitle
+
+  set t_ts=k
+  set t_fs=\
+  set title
+
 endif
 "===================================================================================
 " VARIOUS PLUGIN CONFIGURATIONS
@@ -302,6 +303,7 @@ nnoremap <Leader>e :Explore! <enter>
 " Markdown
 "-----------------------------------------------------------------------------------
 autocmd FileType markdown setlocal spell
+autocmd FileType rmarkdown setlocal spell
 
 "-----------------------------------------------------------------------------------
 " Vim-R
@@ -313,8 +315,11 @@ let R_assign = 3
 
 let R_parenblock = 0 " Don't try to match parens when sending lines
 
+let r_syntax_folding = 1
+
 let rrst_syn_hl_chunk = 1
 let rmd_syn_hl_chunk = 1
+
 autocmd FileType r setlocal shiftwidth=2
 
 "-----------------------------------------------------------------------------------
