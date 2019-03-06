@@ -29,6 +29,7 @@ Plugin 'jonathanfilip/vim-dbext'   " sql manager
 "Plugin 'posva/vim-vue'            " vue file syntax
 Plugin 'itchyny/lightline.vim'
 Plugin 'maximbaz/lightline-ale'
+Plugin 'editorconfig/editorconfig-vim' " Support editorconfig
 call vundle#end()
 filetype plugin indent on    " required
 
