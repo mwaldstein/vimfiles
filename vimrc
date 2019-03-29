@@ -174,28 +174,20 @@ let paths = split(globpath(&runtimepath, 'colors/*.vim'), "\n")
 let s:swcolors = ['solarized8', 'solarized8_low', 'solarized8_high',
                  \'solarized8_flat', 'gruvbox' ]
 let s:swskip = [ '256-jungle', '3dglasses', 'calmar256-light', 'coots-beauty-256', 'grb256' ]
-let s:swback = 0    " background variants light/dark was not yet switched
 let s:swindex = 0
 
 function! SwitchColor(swinc)
-  " if have switched background: dark/light
-  if (s:swback == 1)
-    let s:swindex += a:swinc
-  endif
-  let i = s:swindex % len(s:swcolors)
+  let s:swindex += a:swinc
+
+  let s:background = (s:swindex % 2) == 1 ? 'light' : 'dark'
+  let i = float2nr(s:swindex / 2) % len(s:swcolors)
 
   " in skip list
   if (index(s:swskip, s:swcolors[i]) != -1)
     return SwitchColor(a:swinc)
   endif
 
-  if (s:swback == 1)
-    if (&background == "light")
-      execute "set background=dark"
-    else
-      execute "set background=light"
-    endif
-  endif
+  execute "set background=" . s:background
   execute "colorscheme " . s:swcolors[i]
 
   " roll back if background is not supported
@@ -203,8 +195,6 @@ function! SwitchColor(swinc)
     "execute "colorscheme " . s:swcolors[i]
     "return SwitchColor(a:swinc)
   endif
-
-  let s:swback = (s:swback == 1 ? 0 : 1)
 
   " show current name on screen. :h :echo-redraw
   redraw
