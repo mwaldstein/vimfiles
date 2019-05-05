@@ -22,14 +22,15 @@ Plugin 'tpope/vim-vinegar'        " Folder navigation
 Plugin 'sheerun/vim-polyglot'     " syntax support for everything
 Plugin 'vim-pandoc/vim-pandoc-syntax' "needed to make RMD syntax highlighting work
 Plugin 'junegunn/vim-easy-align'  " Like it says on the tin
-Plugin 'joereynolds/SQHell.vim'   " sql manager
+"Plugin 'joereynolds/SQHell.vim'   " sql manager
 "Plugin 'dbext.vim'                " sql manager
-Plugin 'jonathanfilip/vim-dbext'   " sql manager
+"Plugin 'jonathanfilip/vim-dbext'   " sql manager
 "Plugin 'pangloss/vim-javascript'  " better js syntax
 "Plugin 'posva/vim-vue'            " vue file syntax
 Plugin 'itchyny/lightline.vim'
 Plugin 'maximbaz/lightline-ale'
 Plugin 'editorconfig/editorconfig-vim' " Support editorconfig
+Plugin 'tpope/vim-fugitive' " git support...
 call vundle#end()
 filetype plugin indent on    " required
 
