@@ -79,6 +79,9 @@ set showcmd                     " show command in last line
 set hidden                      " don't unload hidden buffers
 set ttyfast                     " smooths redrawing due to more characters sent along
 
+set fileformat=unix             " Force use of unix line endings.
+set fileformats=unix,dos
+
 set textwidth=79                " wrap at line 79
 
 " vim 7.3 specific options
@@ -179,7 +182,7 @@ let s:swindex = 0
 function! SwitchColor(swinc)
   let s:swindex += a:swinc
 
-  let s:background = (s:swindex % 2) == 1 ? 'light' : 'dark'
+  let s:background = (s:swindex % 2) == 1 || (s:swindex % 2) == -1 ? 'light' : 'dark'
   let i = float2nr(s:swindex / 2) % len(s:swcolors)
 
   " in skip list
