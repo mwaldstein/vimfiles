@@ -214,6 +214,50 @@ imap <S-F11> <Esc>:call SwitchColor(-1)<CR>
 nnoremap <leader>]] :call SwitchColor(1)<CR>
 nnoremap <leader>][ :call SwitchColor(-1)<CR>
 
+" From https://github.com/drmikehenry/vim-fontsize/blob/master/autoload/fontsize.vim
+" I'd use that plugin, but don't like the interaction mode
+let s:fontpattern = '\(.\{-}:h\)\(\d\+\)\(.*\)'
+if has("gui_gtk2") || has("gui_gtk3")
+  let s:fontpattern = '\(.\{-} \)\(\d\+\)\(.*\)'
+elseif has("gui_photon")
+  let s:fontpattern = '\(.\{-}:s\)\(\d\+\)\(.*\)'
+elseif has("gui_kde")
+  let s:fontpattern = '\(.\{-}\/\)\(\d\+\)\(.*\)'
+elseif has("x11")
+  let s:fontpattern = '\(.\{-}-\)\(\d\+\)\(.*\)'
+endif
+let s:minfontsize = 8
+let s:maxfontsize = 16
+function! AdjustFontSize(amount)
+  "if has("gui_gtk2") && has("gui_running")
+  if has("gui_running")
+    let fontname = substitute(&guifont, s:fontpattern, '\1', '')
+    let cursize = substitute(&guifont, s:fontpattern, '\2', '')
+    let suffix = substitute(&guifont, s:fontpattern, '\3', '')
+    let newsize = cursize + a:amount
+    if (newsize >= s:minfontsize) && (newsize <= s:maxfontsize)
+      let newfont = fontname . newsize . suffix
+      let &guifont = newfont
+      let &gfn = newfont
+    endif
+  else
+    echoerr "You need to run the GTK2 version of Vim to use this function."
+  endif
+endfunction
+
+function! LargerFont()
+  call AdjustFontSize(1)
+endfunction
+command! LargerFont call LargerFont()
+
+function! SmallerFont()
+  call AdjustFontSize(-1)
+endfunction
+command! SmallerFont call SmallerFont()
+
+nnoremap <leader>]- :call SmallerFont()<CR>
+nnoremap <leader>]= :call LargerFont()<CR>
+
 "-------------------------------------------------------------------------------
 "     F12  -  Paste toggle
 "-------------------------------------------------------------------------------
@@ -289,7 +333,7 @@ set foldlevelstart=2
 let g:netrw_liststyle = 1 " Detail View
 let g:netrw_sizestyle = "H" " Human-readable file sizes
 let g:netrw_list_hide = '\(^\|\s\s\)\zs\.\S\+' " hide dotfiles
-" let g:netrw_hide = 1 " hide dotfiles by default
+let g:netrw_hide = 0 " dont hide dotfiles by default
 "let g:netrw_banner = 0 " Turn off banner
 """ Explore in vertical split
 nnoremap <Leader>e :Explore! <enter>
@@ -331,6 +375,8 @@ nmap ga <Plug>(EasyAlign)
 "-----------------------------------------------------------------------------------
 let g:vue_disable_pre_processors=1 " Speeds up slowdown from vim-vue checking for everything
 autocmd FileType vue syntax sync fromstart " avoid syntax highlighting getting confused
+nnoremap <leader>\ :syntax sync fromstart<enter> " easy clear out search
+
 
 "-----------------------------------------------------------------------------------
 " dbext
