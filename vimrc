@@ -22,6 +22,7 @@ Plugin 'tpope/vim-vinegar'        " Folder navigation
 Plugin 'sheerun/vim-polyglot'     " syntax support for everything
 Plugin 'vim-pandoc/vim-pandoc-syntax' "needed to make RMD syntax highlighting work
 Plugin 'junegunn/vim-easy-align'  " Like it says on the tin
+Plugin 'pedrohdz/vim-yaml-folds'  " Nicer folds for yaml
 "Plugin 'joereynolds/SQHell.vim'   " sql manager
 "Plugin 'dbext.vim'                " sql manager
 "Plugin 'jonathanfilip/vim-dbext'   " sql manager
@@ -392,6 +393,9 @@ let g:ale_sign_column_always = 1           " always keep the gutter open
 " Map keys to use wrapping.
 nmap <silent> <Leader>n <Plug>(ale_previous_wrap)
 nmap <silent> <Leader>p <Plug>(ale_next_wrap)
+
+" pretend that all yaml is actually cloudformation
+let g:ale_linter_aliases = {'yaml': ['cloudformation', 'yaml']}
 
 "-----------------------------------------------------------------------------------
 " Lightline + Lightline-ale
